@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nandha Kishore - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts: DM Sans + Space Grotesk -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue-accent:#08a7ff;
+      --text-main:#ffffff;
+      --text-soft:#e3e6ff;
+      --bg-main:#050608;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text-main);
+      background:var(--bg-main);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* animated gradient blobs in background */
+    .bg-blur{
+      position:fixed;
+      inset:-20%;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(circle at 5% 10%, #4f46e5 0, transparent 55%),
+        radial-gradient(circle at 80% 15%, #7c3aed 0, transparent 55%),
+        radial-gradient(circle at 0% 85%, #00c3ff 0, transparent 55%);
+      filter:blur(12px);
+      opacity:0.9;
+      animation:bgMove 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgMove{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(-20px,10px,0) scale(1.05);}
+    }
+
+    .wrapper{
+      max-width:1200px;
+      margin:0 auto;
+      padding:28px 20px 56px;
+    }
+
+    /* HEADER */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:56px;
+    }
+    .logo{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      background:var(--blue-accent);
+      padding:10px 28px;
+      font-weight:600;
+      letter-spacing:1.8px;
+      font-size:14px;
+      text-transform:uppercase;
+      color:#04111c;
+      border-radius:999px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.45);
+    }
+
+    nav ul{
+      list-style:none;
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      font-size:13px;
+    }
+    nav a{
+      color:#cfd3ff;
+      text-decoration:none;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      position:relative;
+      padding-bottom:4px;
+    }
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0;
+      height:2px;
+      background:var(--blue-accent);
+      transition:width .25s ease;
+    }
+    nav a:hover::after{width:100%;}
+    .timeline-bar{
+      flex:1;
+      height:2px;
+      background:#ffffff40;
+      border-radius:999px;
+      position:relative;
+      min-width:120px;
+    }
+    .timeline-bar::after{
+      content:"";
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      border:2px solid #fff;
+    }
+
+    /* Mobile hamburger + glossy mobile menu */
+    .menu-btn{
+      display:none; /* shown only on small screens */
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .menu-btn .bar{
+      position:relative;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      display:block;
+    }
+    .menu-btn .bar::before,
+    .menu-btn .bar::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      transition:transform .22s ease;
+    }
+    .menu-btn .bar::before{ top:-6px; }
+    .menu-btn .bar::after{ bottom:-6px; }
+    .menu-btn.open .bar{ background:transparent; }
+    .menu-btn.open .bar::before{ transform:rotate(45deg) translate(3px,3px); top:0; }
+    .menu-btn.open .bar::after{ transform:rotate(-45deg) translate(3px,-3px); bottom:0; }
+
+    .mobile-nav{
+      position:absolute;
+      right:20px;
+      top:74px;
+      min-width:220px;
+      padding:12px;
+      gap:8px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 16px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      transform-origin:top right;
+      opacity:0;
+      transform:translateY(-10px) scale(.98);
+      pointer-events:none;
+      transition:opacity .22s ease, transform .22s ease;
+      z-index:60;
+    }
+    .mobile-nav.open{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      pointer-events:auto;
+    }
+    .mobile-nav a{
+      color:var(--text-main);
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius:8px;
+      font-weight:600;
+      letter-spacing:1px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .mobile-nav a:hover{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:0 6px 18px rgba(8,167,255,0.08);
+    }
+
+    /* MAIN LAYOUT – image fully on right */
+    main{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+      gap:40px;
+      align-items:stretch;
+      min-height:70vh;
+    }
+
+    .left{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding-right:12px;
+      animation:fadeInLeft .7s ease-out both;
+    }
+    @keyframes fadeInLeft{
+      from{opacity:0;transform:translateX(-26px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+
+    .hello{
+      color:#59c3ff;
+      font-size:13px;
+      margin-bottom:18px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+    }
+    h1{
+      font-family:"Space Grotesk",system-ui,sans-serif;
+      font-size:56px;
+      line-height:1.05;
+      margin-bottom:22px;
+    }
+    h1 span{display:block;}
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:28px;
+      padding:9px 18px;
+      border-radius:999px;
+      background:rgba(8,167,255,0.12);
+      color:var(--text-soft);
+      font-size:12px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      border:1px solid rgba(8,167,255,0.7);
+      backdrop-filter:blur(10px);
+    }
+    .tag::before{
+      content:"●";
+      font-size:9px;
+      color:var(--blue-accent);
+    }
+    .description{
+      max-width:540px;
+      font-size:16px;
+      line-height:1.8;
+      color:var(--text-soft);
+    }
+    .bottom-line{
+      margin-top:52px;
+      height:2px;
+      background:#ffffff80;
+      position:relative;
+      border-radius:999px;
+    }
+    .bottom-line::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      border:2px solid #fff;
+    }
+
+    /* IMAGE – full right side hero */
+    .right{
+      position:relative;
+      animation:fadeInRight .7s ease-out both;
+    }
+    @keyframes fadeInRight{
+      from{opacity:0;transform:translateX(26px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+    .img-panel{
+      position:auto;
+      
+      width:100%;
+      height:100%;
+      min-height:360px;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 32px 80px rgba(0,0,0,0.7);
+      background:
+        radial-gradient(circle at 20% 0%, #4f46e5 0, transparent 65%),
+        radial-gradient(circle at 90% 40%, #06b6d4 0, transparent 60%);
+    }
+    .img-panel::after{
+      content:"";
+      position:absolute;
+      inset:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.16);
+      pointer-events:none;
+    }
+    .profile-img{
+      position:absolute;
+      margin-left: 30px;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:right center;
+      transform:translateY(0);
+      transition:transform .5s ease, filter .5s ease;
+    }
+    .img-panel:hover .profile-img{
+      transform:translateY(-5px) scale(1.03);
+      filter:brightness(1.05);
+    }
+
+    /* small floating card over image */
+    .badge-card{
+      position:absolute;
+      left:18px;
+      bottom:22px;
+      margin: 10px;
+      padding:10px 14px;
+      border-radius:12px;
+      background:rgba(5,6,8,0.88);
+      color:var(--text-soft);
+      font-size:12px;
+      letter-spacing:.4px;
+      backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,0.12);
+      animation:floatBadge 6s ease-in-out infinite alternate;
+    }
+    @keyframes floatBadge{
+      from{transform:translateY(0);}
+      to{transform:translateY(-6px);}
+    }
+    .badge-card span{
+      display:block;
+      font-size:11px;
+      opacity:.8;
+    }
+    .badge-card strong{
+      font-size:13px;
+      color:var(--blue-accent);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:992px){
+      /* keep logo and hamburger inline (parallel) on mobile,
+         move timeline-bar to its own full-width row below */
+      header{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+        gap:12px;
+        flex-wrap:wrap; /* allows timeline-bar to drop to next line */
+      }
+      .timeline-bar{
+        order:2;
+        width:100%;
+        margin-top:12px;
+        align-self:stretch;
+      }
+      main{
+        grid-template-columns:1fr;
+        gap:32px;
+      }
+      /* show hamburger and hide desktop nav on mobile */
+      .menu-btn{ display:flex; margin-left:auto; order:1; }
+      nav.desktop{ display:none; } /* hide original desktop nav */
+      /* ensure right column stacks above/on top if intended */
+      .right{ order:-1; }
+      h1{font-size:44px;}
+    }
+    @media (max-width:600px){
+      .wrapper{padding:20px 16px 40px;}
+      nav ul{gap:16px;font-size:12px;}
+      h1{font-size:34px;}
+      .description{font-size:15px;}
+      .bottom-line{margin-top:38px;}
+      .img-panel{
+        min-height:320px;
+        border-radius:18px;
+      }
+      .badge-card{
+        left:14px;
+        bottom:18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blur"></div>
+
+  <div class="wrapper">
+    <header>
+        <a style="text-decoration: none;" href=""><div class="logo">NANDHA KISHORE</div></a>
+      
+      <!-- desktop nav (kept for large screens) -->
+      <nav class="desktop">
+        <ul>
+          <li><a href="aboutme.html">ABOUT ME</a></li>
+          <li><a href="#education">EDUCATION</a></li>
+          <li><a href="#experience">EXPERIENCE</a></li>
+          <li><a href="#project">PROJECT</a></li>
+          <li><a href="#contact">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <!-- hamburger shown only on mobile -->
+      <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- glossy mobile menu (hidden by default) -->
+      <nav id="mobileNav" class="mobile-nav" aria-hidden="true">
+        <a href="aboutme.html">ABOUT ME</a>
+        <a href="#education">EDUCATION</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#project">PROJECT</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+      
+      <!-- <div class="timeline-bar"></div> -->
+    </header>
+
+    <main>
+      <section class="left" id="about">
+        <div class="hello">HELLO !!!</div>
+        <h1>
+          <span>I'm Nandha</span>
+          <span>Kishore</span>
+        </h1>
+        <div class="tag">SUBJECT MATERIAL EXPERT (SME)</div>
+        <p class="description">
+          I am an experienced full-stack developer and trainer specializing in PHP, Laravel, Java, embedded systems, IoT, and UI/UX design.
+          I deliver end-to-end solutions with scalable web apps, connected devices, and intuitive interfaces while mentoring teams to master these technologies for project success.
+        </p>
+        <div class="bottom-line"></div>
+      </section>
+
+      <aside class="right">
+        <div class="img-panel">
+            
+          <img src="nandhakishoreitc.png" alt="Nandha Kishore" class="profile-img">
+
+          <div class="badge-card">
+            <span>Full‑Stack Developer & Trainer</span>
+            <strong>PHP • Laravel • Java • IoT</strong>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Future sections (empty anchors for now) -->
+    <section id="education"></section>
+    <section id="experience"></section>
+    <section id="project"></section>
+    <section id="contact"></section>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const mobile = document.getElementById('mobileNav');
+      function setOpen(open){
+        btn && btn.classList.toggle('open', open);
+        btn && btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobile && mobile.classList.toggle('open', open);
+        mobile && mobile.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+      btn && btn.addEventListener('click', ()=> setOpen(!mobile.classList.contains('open')));
+      // close when a link clicked
+      mobile && mobile.addEventListener('click', e => { if(e.target.tagName === 'A') setOpen(false); });
+      // close on resize to desktop
+      window.addEventListener('resize', ()=> { if(window.innerWidth > 992) setOpen(false); });
+      // close when clicking outside
+      document.addEventListener('click', (e) => {
+        if(!mobile || !btn) return;
+        if(!mobile.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+      });
+    })();
+  </script>
+ </body>
+</html>

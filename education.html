@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nandha Kishore - Education</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+ <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+  <style>
+    :root{
+      --blue-accent:#08a7ff;
+      --text-main:#ffffff;
+      --text-soft:#e3e6ff;
+      --bg-main:#050608;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text-main);
+      background:var(--bg-main);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* animated gradient background */
+    .bg-layer{
+      position:fixed;
+      inset:-20%;
+      background:
+        radial-gradient(circle at 5% 10%, #4f46e5 0, transparent 60%),
+        radial-gradient(circle at 80% 20%, #7c3aed 0, transparent 60%),
+        radial-gradient(circle at 0% 80%, #00c3ff 0, transparent 60%);
+      filter:blur(14px);
+      opacity:0.9;
+      z-index:-2;
+      animation:bgFloat 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgFloat{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(-24px,12px,0) scale(1.05);}
+    }
+
+    .wrapper{
+      max-width:1200px;
+      margin:0 auto;
+      padding:32px 24px 64px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* HEADER + NAV */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:64px;
+    }
+    .logo{
+        font-family:"Space Grotesk",system-ui,sans-serif;
+      background:var(--blue-accent);
+      padding:12px 32px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:14px;
+      text-transform:uppercase;
+      color:#04111c;
+      border-radius:999px;
+      box-shadow:0 10px 26px rgba(0,0,0,0.5);
+    }
+    nav.desktop ul{
+      list-style:none;
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      font-size:13px;
+    }
+    nav.desktop a{
+      color:#cfd3ff;
+      text-decoration:none;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      position:relative;
+      padding-bottom:4px;
+    }
+    nav.desktop a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0;
+      height:2px;
+      background:var(--blue-accent);
+      transition:width .25s ease;
+    }
+    nav.desktop a:hover::after{width:100%;}
+
+    /* Mobile hamburger + glossy mobile menu */
+    .menu-btn{
+      display:none;
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .menu-btn .bar{
+      position:relative;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      display:block;
+    }
+    .menu-btn .bar::before,
+    .menu-btn .bar::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      transition:transform .22s ease;
+    }
+    .menu-btn .bar::before{ top:-6px; }
+    .menu-btn .bar::after{ bottom:-6px; }
+    .menu-btn.open .bar{ background:transparent; }
+    .menu-btn.open .bar::before{ transform:rotate(45deg) translate(3px,3px); top:0; }
+    .menu-btn.open .bar::after{ transform:rotate(-45deg) translate(3px,-3px); bottom:0; }
+
+    .mobile-nav{
+      position:absolute;
+      right:20px;
+      top:74px;
+      min-width:220px;
+      padding:12px;
+      gap:8px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 16px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      transform-origin:top right;
+      opacity:0;
+      transform:translateY(-10px) scale(.98);
+      pointer-events:none;
+      transition:opacity .22s ease, transform .22s ease;
+      z-index:60;
+    }
+    .mobile-nav.open{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      pointer-events:auto;
+    }
+    .mobile-nav a{
+      color:var(--text-main);
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius:8px;
+      font-weight:600;
+      letter-spacing:1px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .mobile-nav a:hover{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:0 6px 18px rgba(8,167,255,0.08);
+    }
+
+    /* EDUCATION SECTION */
+    .education-section{
+      display:grid;
+      grid-template-columns:minmax(0,0.8fr) minmax(0,1.6fr);
+      gap:48px;
+      align-items:flex-start;
+      padding:40px 0 40px;
+    }
+    .edu-title{
+      font-size:40px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .edu-underline{
+      width:220px;
+      height:5px;
+      margin-top:18px;
+      background:var(--blue-accent);
+      box-shadow:0 0 12px rgba(8,167,255,0.7);
+    }
+    .edu-year-range{
+      font-size:100px;
+      font-weight:700;
+      letter-spacing:8px;
+      color:rgb(255, 255, 255);
+      margin-bottom:32px;
+    }
+    .edu-year-range span{
+      display:inline-block;
+    }
+    .edu-item{
+      margin-bottom:28px;
+    }
+    .edu-school{
+      font-size:22px;
+      font-weight:600;
+    }
+    .edu-meta{
+      margin-top:6px;
+      font-size:16px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:rgba(227,230,255,0.75);
+    }
+
+    .edu-timeline{
+      grid-column:1 / -1;
+      margin-top:40px;
+      height:2px;
+      background:rgba(255,255,255,0.7);
+      position:relative;
+    }
+    .edu-timeline::before,
+    .edu-timeline::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      border:2px solid #fff;
+      transform:translateY(-50%);
+      background:transparent;
+    }
+    .edu-timeline::before{ left:0; }
+    .edu-timeline::after{ right:0; }
+
+    /* RESPONSIVE */
+    @media(max-width:992px){
+      header{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+        gap:12px;
+        flex-wrap:wrap;
+      }
+      nav.desktop{display:none;}
+      .menu-btn{display:flex;margin-left:auto;}
+
+      .education-section{
+        grid-template-columns:1fr;
+        gap:32px;
+      }
+      .edu-year-range{
+        font-size:68px;
+      }
+    }
+        @media(max-width:600px){
+      .wrapper{padding:24px 18px 40px;}
+      .edu-title{font-size:32px;}
+      .edu-year-range{font-size:52px;letter-spacing:4px;}
+    }
+
+    .edu-intro{
+  margin-top:26px;
+  max-width:360px;
+  font-size:15px;
+  line-height:1.7;
+  color:var(--text-soft);
+  opacity:0.9;
+}
+
+/* glowing mini cards */
+.edu-stats{
+  margin-top:28px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.edu-stat-card{
+  min-width:96px;
+  padding:10px 16px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.6));
+  box-shadow:0 14px 34px rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  transform:translateY(0);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.edu-stat-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(8,167,255,0.45);
+  border-color:rgba(8,167,255,0.8);
+}
+.stat-label{
+  font-size:11px;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:rgba(227,230,255,0.8);
+}
+.stat-value{
+  font-size:18px;
+  font-weight:600;
+}
+
+/* subtle heading + year animations */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes slideRight{
+  from{opacity:0;transform:translateX(30px);}
+  to{opacity:1;transform:translateX(0);}
+}
+@keyframes sweep{
+  from{transform:scaleX(0);transform-origin:left;}
+  to{transform:scaleX(1);transform-origin:left;}
+}
+@keyframes glowPulse{
+  0%{text-shadow:0 0 0 rgba(8,167,255,0.0);}
+  50%{text-shadow:0 0 22px rgba(8,167,255,0.9);}
+  100%{text-shadow:0 0 0 rgba(8,167,255,0.0);}
+}
+@keyframes linePulse{
+  0%{box-shadow:0 0 0 rgba(8,167,255,0.0);}
+  50%{box-shadow:0 0 18px rgba(8,167,255,0.9);}
+  100%{box-shadow:0 0 0 rgba(8,167,255,0.0);}
+}
+
+.fade-in-up{animation:fadeUp .7s ease-out both;}
+.slide-in-right{animation:slideRight .7s ease-out .12s both;}
+.sweep-line{animation:sweep .8s ease-out .15s both;}
+.glow-year{animation:glowPulse 3s ease-in-out infinite;}
+.pulse-line{animation:linePulse 2.8s ease-in-out infinite;}
+
+/* responsive tweaks */
+@media(max-width:992px){
+  .edu-intro{max-width:none;}
+  .edu-stats{gap:12px;}
+}
+@media(max-width:600px){
+  .edu-stats{justify-content:flex-start;}
+}
+
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+
+  <div class="wrapper">
+    <header>
+      <a href="index.html" style="text-decoration:none;">
+        <div class="logo">NANDHA KISHORE</div>
+      </a>
+
+      <!-- desktop nav -->
+      <nav class="desktop">
+        <ul>
+          <li><a href="aboutme.html">ABOUT ME</a></li>
+          <li><a href="education.html">EDUCATION</a></li>
+          <li><a href="experience.html">EXPERIENCE</a></li>
+          <li><a href="project.html">PROJECT</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <!-- hamburger for mobile -->
+      <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- glossy mobile menu -->
+      <nav id="mobileNav" class="mobile-nav" aria-hidden="true">
+        <a href="aboutme.html">ABOUT ME</a>
+        <a href="education.html">EDUCATION</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="project.html">PROJECT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+    </header>
+
+    <!-- EDUCATION CONTENT -->
+   <main>
+  <section id="education" class="education-section">
+    <div class="edu-left">
+      <h2 class="edu-title fade-in-up">EDUCATION</h2>
+      <div class="edu-underline sweep-line"></div>
+
+      <!-- small intro text -->
+      <p class="edu-intro">
+        A focused academic journey from school to engineering, building a solid foundation in maths,
+        electronics, and problem‑solving for real‑world tech projects.
+      </p>
+
+      <!-- glowing stats -->
+      <div class="edu-stats">
+        <div class="edu-stat-card">
+          <span class="stat-label">SSLC</span>
+          <span class="stat-value">2015</span>
+        </div>
+        <div class="edu-stat-card">
+          <span class="stat-label">HSC</span>
+          <span class="stat-value">2017</span>
+        </div>
+        <div class="edu-stat-card">
+          <span class="stat-label">B.E ECE</span>
+          <span class="stat-value">2021</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-right slide-in-right">
+      <!-- Year range -->
+      <div class="edu-year-range glow-year">
+        <span class="year-start">2015</span>
+        <span class="year-dash"> - </span>
+        <span class="year-end">2021</span>
+      </div>
+
+      <!-- School 1 -->
+      <div class="edu-item">
+        <h3 class="edu-school">St. James Matriculation Higher Secondary School</h3>
+        <p class="edu-meta">SSLC | 2015</p>
+      </div>
+
+      <!-- School 2 -->
+      <div class="edu-item">
+        <h3 class="edu-school">RC Higher Secondary School</h3>
+        <p class="edu-meta">HSC | 2017</p>
+      </div>
+
+      <!-- College -->
+      <div class="edu-item">
+        <h3 class="edu-school">B.E - ECE</h3>
+        <p class="edu-meta">MAM College of Engineering | 2021</p>
+      </div>
+    </div>
+
+    <!-- bottom timeline line -->
+    <div class="edu-timeline pulse-line"></div>
+  </section>
+</main>
+
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const mobile = document.getElementById('mobileNav');
+
+      function setOpen(open){
+        if(!btn || !mobile) return;
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobile.classList.toggle('open', open);
+        mobile.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+
+      if(btn){
+        btn.addEventListener('click', () => {
+          const isOpen = mobile.classList.contains('open');
+          setOpen(!isOpen);
+        });
+      }
+
+      // close when a link is clicked
+      if(mobile){
+        mobile.addEventListener('click', e => {
+          if(e.target.tagName === 'A'){ setOpen(false); }
+        });
+      }
+
+      // close on resize to desktop
+      window.addEventListener('resize', () => {
+        if(window.innerWidth > 992){ setOpen(false); }
+      });
+
+      // close when clicking outside
+      document.addEventListener('click', (e) => {
+        if(!mobile || !btn) return;
+        if(!mobile.contains(e.target) && !btn.contains(e.target)){
+          setOpen(false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+

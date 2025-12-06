@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nandha Kishore - Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+ <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+  <style>
+    :root{
+      --blue-accent:#08a7ff;
+      --text-main:#ffffff;
+      --text-soft:#e3e6ff;
+      --bg-main:#050608;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text-main);
+      background:var(--bg-main);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* animated gradient background */
+    .bg-layer{
+      position:fixed;
+      inset:-20%;
+      background:
+        radial-gradient(circle at 5% 10%, #4f46e5 0, transparent 60%),
+        radial-gradient(circle at 80% 20%, #7c3aed 0, transparent 60%),
+        radial-gradient(circle at 0% 80%, #00c3ff 0, transparent 60%);
+      filter:blur(14px);
+      opacity:0.9;
+      z-index:-2;
+      animation:bgFloat 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgFloat{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(-24px,12px,0) scale(1.05);}
+    }
+
+    .wrapper{
+      max-width:1200px;
+      margin:0 auto;
+      padding:32px 24px 64px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* HEADER + NAV */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:64px;
+    }
+    .logo{
+        font-family:"Space Grotesk",system-ui,sans-serif;
+      background:var(--blue-accent);
+      padding:12px 32px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:14px;
+      text-transform:uppercase;
+      color:#04111c;
+      border-radius:999px;
+      box-shadow:0 10px 26px rgba(0,0,0,0.5);
+    }
+    nav.desktop ul{
+      list-style:none;
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      font-size:13px;
+    }
+    nav.desktop a{
+      color:#cfd3ff;
+      text-decoration:none;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      position:relative;
+      padding-bottom:4px;
+    }
+    nav.desktop a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0;
+      height:2px;
+      background:var(--blue-accent);
+      transition:width .25s ease;
+    }
+    nav.desktop a:hover::after{width:100%;}
+
+    /* Mobile hamburger + glossy mobile menu */
+    .menu-btn{
+      display:none;
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .menu-btn .bar{
+      position:relative;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      display:block;
+    }
+    .menu-btn .bar::before,
+    .menu-btn .bar::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      transition:transform .22s ease;
+    }
+    .menu-btn .bar::before{ top:-6px; }
+    .menu-btn .bar::after{ bottom:-6px; }
+    .menu-btn.open .bar{ background:transparent; }
+    .menu-btn.open .bar::before{ transform:rotate(45deg) translate(3px,3px); top:0; }
+    .menu-btn.open .bar::after{ transform:rotate(-45deg) translate(3px,-3px); bottom:0; }
+
+    .mobile-nav{
+      position:absolute;
+      right:20px;
+      top:74px;
+      min-width:220px;
+      padding:12px;
+      gap:8px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 16px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      transform-origin:top right;
+      opacity:0;
+      transform:translateY(-10px) scale(.98);
+      pointer-events:none;
+      transition:opacity .22s ease, transform .22s ease;
+      z-index:60;
+    }
+    .mobile-nav.open{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      pointer-events:auto;
+    }
+    .mobile-nav a{
+      color:var(--text-main);
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius:8px;
+      font-weight:600;
+      letter-spacing:1px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .mobile-nav a:hover{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:0 6px 18px rgba(8,167,255,0.08);
+    }
+
+    /* PROJECT SECTION */
+    .project-section{
+      padding:40px 0 40px;
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1.2fr);
+      /* gap:40px; */
+      align-items:flex-start;
+      position:relative;
+    }
+
+    .project-title{
+      font-size:40px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+    .project-underline{
+      width:220px;
+      height:5px;
+      margin-top:18px;
+      background:var(--blue-accent);
+      box-shadow:0 0 12px rgba(8,167,255,0.7);
+    }
+
+    /* dotted pattern */
+    .project-dots{
+      position:absolute;
+      top:120px;
+      left:50%;
+      transform:translateX(-10%);
+      display:grid;
+      grid-template-columns:repeat(6,10px);
+      grid-auto-rows:10px;
+      gap:10px;
+    }
+    .project-dots span{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#3fb6ff;
+      opacity:0.85;
+    }
+
+    /* cards row */
+    .project-grid{
+      grid-column:1 / -1;
+      margin-top:40px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:40px;
+    }
+
+    .project-card{
+      flex:1 1 320px;
+      max-width:480px;
+    }
+
+    .project-frame{
+      border-radius:8px;
+      padding:10px;
+      background:#111827;
+      box-shadow:0 18px 40px rgba(0,0,0,0.7);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .project-frame-blue{
+      border:4px solid #37b6ff;
+    }
+    .project-frame-pink{
+      border:4px solid #ff3abf;
+    }
+    .project-card:hover .project-frame{
+      transform:translateY(-6px);
+      box-shadow:0 26px 60px rgba(0,0,0,0.9);
+    }
+    .project-img{
+      width:100%;
+      display:block;
+      border-radius:4px;
+    }
+
+    .project-name{
+      margin-top:16px;
+      font-size:20px;
+      font-weight:600;
+    }
+
+    /* bottom line */
+    .project-timeline{
+      grid-column:1 / -1;
+      margin-top:46px;
+      height:2px;
+      background:rgba(255,255,255,0.75);
+      position:relative;
+    }
+    .project-timeline::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      border:2px solid #fff;
+      transform:translateY(-50%);
+      background:transparent;
+    }
+
+    /* simple entrance animation */
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(18px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    .fade-in-up{animation:fadeUp .7s ease-out both;}
+
+    /* responsiveness */
+    @media(max-width:992px){
+      header{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+        gap:12px;
+        flex-wrap:wrap;
+      }
+      nav.desktop{display:none;}
+      .menu-btn{display:flex;margin-left:auto;}
+
+      .project-section{
+        grid-template-columns:1fr;
+      }
+      .project-dots{
+        position:static;
+        transform:none;
+        margin:12px 0 0;
+      }
+    }
+        @media(max-width:600px){
+      .wrapper{padding:24px 18px 40px;}
+      .project-title{font-size:32px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+
+  <div class="wrapper">
+    <header>
+      <a href="index.html" style="text-decoration:none;">
+        <div class="logo">NANDHA KISHORE</div>
+      </a>
+
+      <!-- desktop nav -->
+      <nav class="desktop">
+        <ul>
+          <li><a href="aboutme.html">ABOUT ME</a></li>
+          <li><a href="education.html">EDUCATION</a></li>
+          <li><a href="experience.html">EXPERIENCE</a></li>
+          <li><a href="project.html">PROJECT</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <!-- hamburger for mobile -->
+      <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- glossy mobile menu -->
+      <nav id="mobileNav" class="mobile-nav" aria-hidden="true">
+        <a href="aboutme.html">ABOUT ME</a>
+        <a href="education.html">EDUCATION</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="project.html">PROJECT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+    </header>
+
+    <!-- PROJECT CONTENT -->
+    <main>
+      <section id="project" class="project-section">
+        <!-- LEFT: heading -->
+        <div class="project-left fade-in-up">
+          <h2 class="project-title">PROJECTS</h2>
+          <div class="project-underline"></div>
+        </div>
+
+        <!-- dotted pattern -->
+        
+
+        <!-- project cards -->
+        <div class="project-grid">
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-frame project-frame-blue">
+              <!-- replace src with your actual image -->
+              <img src="10sportsclub.png" alt="10Sportsclub.com landing page" class="project-img">
+            </div>
+            <h3 class="project-name">10Sportsclub.com</h3>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="project-frame project-frame-pink">
+              <!-- replace src with your actual image -->
+              <img src="comeunity.png" alt="Come‑Unity Olympics website" class="project-img">
+            </div>
+            <h3 class="project-name">comeunityolymbics.com</h3>
+          </article>
+        </div>
+ <div class="project-grid">
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-frame project-frame-blue">
+              <!-- replace src with your actual image -->
+              <img src="gadgetprice.png" alt="10Sportsclub.com landing page" class="project-img">
+            </div>
+            <h3 class="project-name">gadgetprice.net</h3>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="project-frame project-frame-pink">
+              <!-- replace src with your actual image -->
+              <img src="tamilguru.png" alt="Come‑Unity Olympics website" class="project-img">
+            </div>
+            <h3 class="project-name">tamilguru.in</h3>
+          </article>
+        </div>
+         <div class="project-grid">
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-frame project-frame-blue">
+              <!-- replace src with your actual image -->
+              <img src="yukthiayush.png" alt="10Sportsclub.com landing page" class="project-img">
+            </div>
+            <h3 class="project-name">yukthiayushclinic.com</h3>
+          </article>
+
+          <!-- Project 2 -->
+           <article class="project-card">
+            <div class="project-frame project-frame-pink">
+              <!-- replace src with your actual image -->
+              <img src="inavitnews.png" alt="Come‑Unity Olympics website" class="project-img">
+            </div>
+            <h3 class="project-name">inavitnews.com</h3>
+          </article>
+        </div>
+        <!-- bottom line -->
+        <div class="project-timeline"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const mobile = document.getElementById('mobileNav');
+
+      function setOpen(open){
+        if(!btn || !mobile) return;
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobile.classList.toggle('open', open);
+        mobile.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+
+      if(btn){
+        btn.addEventListener('click', () => {
+          const isOpen = mobile.classList.contains('open');
+          setOpen(!isOpen);
+        });
+      }
+
+      if(mobile){
+        mobile.addEventListener('click', e => {
+          if(e.target.tagName === 'A'){ setOpen(false); }
+        });
+      }
+
+      window.addEventListener('resize', () => {
+        if(window.innerWidth > 992){ setOpen(false); }
+      });
+
+      document.addEventListener('click', (e) => {
+        if(!mobile || !btn) return;
+        if(!mobile.contains(e.target) && !btn.contains(e.target)){
+          setOpen(false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+

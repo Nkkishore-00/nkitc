@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nandha Kishore - About</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+ <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+  <style>
+    :root{
+      --blue-accent:#08a7ff;
+      --text-main:#ffffff;
+      --text-soft:#e3e6ff;
+      --bg-main:#050608;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text-main);
+      background:var(--bg-main);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* animated gradient background */
+    .bg-layer{
+      position:fixed;
+      inset:-20%;
+      background:
+        radial-gradient(circle at 5% 10%, #4f46e5 0, transparent 60%),
+        radial-gradient(circle at 80% 20%, #7c3aed 0, transparent 60%),
+        radial-gradient(circle at 0% 80%, #00c3ff 0, transparent 60%);
+      filter:blur(14px);
+      opacity:0.9;
+      z-index:-2;
+      animation:bgFloat 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgFloat{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(-24px,12px,0) scale(1.05);}
+    }
+
+    .wrapper{
+      max-width:1200px;
+      margin:0 auto;
+      padding:32px 24px 56px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* HEADER */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:64px;
+    }
+    .logo{
+        font-family:"Space Grotesk",system-ui,sans-serif;
+      background:var(--blue-accent);
+      padding:12px 32px;
+      font-weight:600;
+      letter-spacing:1px;
+      font-size:14px;
+      text-transform:uppercase;
+      color:#04111c;
+      border-radius:999px;
+      box-shadow:0 10px 26px rgba(0,0,0,0.5);
+    }
+    nav ul{
+      list-style:none;
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      font-size:13px;
+    }
+    nav a{
+      color:#cfd3ff;
+      text-decoration:none;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      position:relative;
+      padding-bottom:4px;
+    }
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0;
+      height:2px;
+      background:var(--blue-accent);
+      transition:width .25s ease;
+    }
+    nav a:hover::after{width:100%;}
+    .timeline-bar{
+      flex:1;
+      height:2px;
+      background:#ffffff40;
+      border-radius:999px;
+      position:relative;
+      min-width:120px;
+    }
+    .timeline-bar::after{
+      content:"";
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      border:2px solid #fff;
+    }
+
+    /* Mobile hamburger + glossy mobile menu */
+    .menu-btn{
+      display:none; /* shown only on small screens */
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .menu-btn .bar{
+      position:relative;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      display:block;
+    }
+    .menu-btn .bar::before,
+    .menu-btn .bar::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:20px;
+      height:2px;
+      background:var(--text-main);
+      transition:transform .22s ease;
+    }
+    .menu-btn .bar::before{ top:-6px; }
+    .menu-btn .bar::after{ bottom:-6px; }
+    .menu-btn.open .bar{ background:transparent; }
+    .menu-btn.open .bar::before{ transform:rotate(45deg) translate(3px,3px); top:0; }
+    .menu-btn.open .bar::after{ transform:rotate(-45deg) translate(3px,-3px); bottom:0; }
+
+    .mobile-nav{
+      position:absolute;
+      right:20px;
+      top:74px;
+      min-width:220px;
+      padding:12px;
+      gap:8px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 16px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      transform-origin:top right;
+      opacity:0;
+      transform:translateY(-10px) scale(.98);
+      pointer-events:none;
+      transition:opacity .22s ease, transform .22s ease;
+      z-index:60;
+    }
+    .mobile-nav.open{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      pointer-events:auto;
+    }
+    .mobile-nav a{
+      color:var(--text-main);
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius:8px;
+      font-weight:600;
+      letter-spacing:1px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .mobile-nav a:hover{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:0 6px 18px rgba(8,167,255,0.08);
+    }
+
+    /* MAIN LAYOUT */
+    main{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr);
+      gap:56px;
+      align-items:center;
+    }
+
+    /* LEFT: IMAGE */
+    .bio-photo{
+      position:relative;
+      animation:fadeInLeft .7s ease-out both;
+    }
+    @keyframes fadeInLeft{
+      from{opacity:0;transform:translateX(-24px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+    .bio-photo-inner{
+      position:relative;
+      max-width:480px;
+    }
+    .bio-photo-inner::before{
+      content:"";
+      position:absolute;
+      inset:-70px -40px -40px -60px;
+      background:
+        radial-gradient(circle at 20% 0%, #4f46e5 0, transparent 60%),
+        radial-gradient(circle at 90% 40%, #06b6d4 0, transparent 55%);
+      filter:blur(26px);
+      opacity:0.95;
+      z-index:-1;
+    }
+    .bio-img{
+      width:100%;
+      display:block;
+    }
+
+    /* dotted grid accent */
+    .dot-grid{
+      position:absolute;
+      top:40px;
+      right:-40px;
+      display:grid;
+      grid-template-columns:repeat(6,10px);
+      grid-auto-rows:10px;
+      gap:14px;
+      animation:dotsPulse 4s ease-in-out infinite alternate;
+    }
+    .dot-grid span{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#46b2ff;
+      opacity:0.85;
+    }
+    @keyframes dotsPulse{
+      from{transform:translateY(0);opacity:0.9;}
+      to{transform:translateY(-6px);opacity:0.6;}
+    }
+
+    /* RIGHT: TEXT */
+    .bio-text{
+      max-width:640px;
+      animation:fadeInRight .7s ease-out both;
+    }
+    @keyframes fadeInRight{
+      from{opacity:0;transform:translateX(24px);}
+      to{opacity:1;transform:translateX(0);}
+    }
+    .bio-text h2{
+      font-size:40px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+    .title-underline{
+      width:200px;
+      height:5px;
+      background:var(--blue-accent);
+      margin-bottom:30px;
+      box-shadow:0 0 12px rgba(8,167,255,0.7);
+    }
+    .bio-text p{
+      font-size:16px;
+      line-height:1.8;
+      color:var(--text-soft);
+      margin-bottom:18px;
+    }
+
+    .skills-heading{
+      font-size:22px;
+      margin:30px 0 18px;
+    }
+    .skills-wrap{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px 22px;
+    }
+    .skill-pill{
+      padding:12px 40px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.8);
+      font-size:13px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      background:rgba(0,0,0,0.3);
+      color:var(--text-main);
+      box-shadow:0 8px 20px rgba(0,0,0,0.45);
+      transition:background .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .skill-pill:hover{
+      background:var(--blue-accent);
+      color:#04111c;
+      transform:translateY(-4px);
+      box-shadow:0 12px 28px rgba(0,0,0,0.6);
+    }
+
+    .bottom-line{
+      margin-top:44px;
+      height:2px;
+      background:#ffffff90;
+      border-radius:999px;
+      position:relative;
+    }
+    .bottom-line::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      border:2px solid #fff;
+      background:transparent;
+    }
+
+    @media(max-width:992px){
+      header{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .timeline-bar{align-self:stretch;width:100%;}
+      main{
+        grid-template-columns:1fr;
+        gap:40px;
+      }
+      .bio-photo{
+        order:-1;
+        display:flex;
+        justify-content:center;
+      }
+      .bio-photo-inner{max-width:380px;}
+      .bio-text h2{font-size:34px;}
+    }
+    @media(max-width:600px){
+      .wrapper{padding:20px 18px 40px;}
+      nav ul{gap:16px;font-size:12px;}
+      .skills-wrap{gap:12px;}
+      .skill-pill{padding:10px 28px;font-size:12px;}
+    }
+     .bio-photo{
+    position:relative;
+    animation:fadeInLeft .7s ease-out both;
+  }
+
+  /* card tuned for tall portrait image */
+  .bio-photo-inner{
+    position:relative;
+    width:100%;
+    max-width:380px;
+    height:520px;                 /* visible area for the tall image */
+    margin:0 auto;
+    border-radius:18px;
+    overflow:hidden;
+    background:radial-gradient(circle at 20% 0%, #1f2933 0, transparent 60%);
+    box-shadow:0 26px 60px rgba(0,0,0,0.8);
+  }
+
+  .bio-photo-inner::before{
+    content:"";
+    position:absolute;
+    inset:-60px -50px -40px -50px;
+    background:
+      radial-gradient(circle at 20% 0%, #4f46e5 0, transparent 60%),
+      radial-gradient(circle at 90% 40%, #06b6d4 0, transparent 55%);
+    filter:blur(28px);
+    opacity:0.95;
+    z-index:-1;
+  }
+
+  /* desktop: cover the card area; mobile will use the mobile source and different positioning */
+  .bio-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    margin-top: -135px;
+    /* height:100%; */
+    object-fit:cover;
+    object-position:center bottom;
+    transform:translateZ(0);
+  }
+
+  /* on small screens use contain so portrait image doesn't crop awkwardly */
+  @media (max-width:992px){
+    .bio-img{
+      position:absolute;
+      width:100%;
+      
+      height:auto;
+      margin-top:-93px;
+      object-fit:contain;
+      object-position:bottom center;
+    }
+    header{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:flex-start;
+        gap:12px;
+        flex-wrap:wrap; /* allows timeline-bar to drop to next line */
+      }
+      .timeline-bar{
+        order:2;
+        width:100%;
+        margin-top:12px;
+        align-self:stretch;
+      }
+      main{
+        grid-template-columns:1fr;
+        gap:32px;
+      }
+      /* show hamburger and hide desktop nav on mobile */
+      .menu-btn{ display:flex; margin-left:auto; order:1; }
+      nav.desktop{ display:none; } /* hide original desktop nav */
+      /* ensure right column stacks above/on top if intended */
+      .right{ order:-1; }
+      h1{font-size:44px;}
+  }
+
+  /* move dot grid so it floats beside the card */
+  .dot-grid{
+    position:absolute;
+    top:32px;
+    right:-36px;
+    display:grid;
+    grid-template-columns:repeat(4,10px);
+    grid-auto-rows:10px;
+    gap:12px;
+    animation:dotsPulse 4s ease-in-out infinite alternate;
+  }
+
+  /* ...keep the rest of your CSS... */
+
+  @media(max-width:992px){
+    /* existing media rules, but card a bit shorter on mobile */
+    .bio-photo-inner{
+      max-width:320px;
+      height:460px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+
+  <div class="wrapper">
+   <header>
+        <a href="index.html" style="text-decoration: none;" href=""><div class="logo">NANDHA KISHORE</div></a>
+      
+      <!-- desktop nav (kept for large screens) -->
+      <nav class="desktop">
+        <ul>
+          <li><a href="aboutme.html">ABOUT ME</a></li>
+          <li><a href="education.html">EDUCATION</a></li>
+          <li><a href="experience.html">EXPERIENCE</a></li>
+          <li><a href="project.html">PROJECT</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <!-- hamburger shown only on mobile -->
+      <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- glossy mobile menu (hidden by default) -->
+      <nav id="mobileNav" class="mobile-nav" aria-hidden="true">
+        <a href="aboutme.html">ABOUT ME</a>
+        <a href="education.html">EDUCATION</a>
+        <a href="experience.html">EXPERIENCE</a>
+        <a href="project.html">PROJECT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+      
+      <!-- <div class="timeline-bar"></div> -->
+    </header>
+
+    <main>
+      <!-- LEFT: PHOTO -->
+      <section class="bio-photo">
+  <div class="bio-photo-inner">
+    <!-- use your tall about-me image here -->
+    <img src="nandhakishoreitcaboutme.png" alt="Nandha Kishore" width="400px" class="bio-img">
+
+    <div class="dot-grid">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+      <!-- RIGHT: TEXT -->
+      <section class="bio-text">
+        <h2>MY BIOGRAPHY</h2>
+        <div class="title-underline"></div>
+
+        <p>
+          Skilled full-stack developer proficient in PHP, Laravel, Java, embedded systems, IoT, and UI/UX design, with numerous projects delivering scalable web apps, smart connected devices, and intuitive user interfaces for real-world applications.
+        </p>
+        <p>
+          Experienced educator who has trained over 1.5 lakh students in PHP, Laravel, Java, embedded systems, IoT, and UI/UX, empowering teams with practical skills for technology mastery and project success.
+        </p>
+
+        <h3 class="skills-heading">Skill &amp; Interest</h3>
+        <div class="skills-wrap">
+          <div class="skill-pill">WEB DESIGN</div>
+          <div class="skill-pill">EMBEDDED SYSTEMS</div>
+          <div class="skill-pill">IOT</div>
+          <div class="skill-pill">UIUX</div>
+          <div class="skill-pill">FULL STACK</div>
+        </div>
+
+        <div class="bottom-line"></div>
+      </section>
+    </main>
+  </div>
+    <script>
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const mobile = document.getElementById('mobileNav');
+      function setOpen(open){
+        btn && btn.classList.toggle('open', open);
+        btn && btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobile && mobile.classList.toggle('open', open);
+        mobile && mobile.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+      btn && btn.addEventListener('click', ()=> setOpen(!mobile.classList.contains('open')));
+      // close when a link clicked
+      mobile && mobile.addEventListener('click', e => { if(e.target.tagName === 'A') setOpen(false); });
+      // close on resize to desktop
+      window.addEventListener('resize', ()=> { if(window.innerWidth > 992) setOpen(false); });
+      // close when clicking outside
+      document.addEventListener('click', (e) => {
+        if(!mobile || !btn) return;
+        if(!mobile.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>
+
